@@ -357,7 +357,7 @@ Luego, extiende esta plantilla en otras plantillas para mantener un diseño cons
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 {% endblock %}
-```
+
 
 ## Seguridad Básica en las Transacciones
 
