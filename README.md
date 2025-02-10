@@ -355,3 +355,72 @@ Crea las plantillas HTML para las vistas CRUD en la carpeta `templates`.
     <button type="submit">Guardar</button>
 </form>
 ```
+###  Integrar una API Externa
+
+Para integrar una API externa en tu aplicación Django, puedes seguir estos pasos. En este ejemplo, vamos a integrar una API de clima utilizando la librería `requests` para obtener datos del clima y mostrarlos en tu aplicación.
+
+#### 1. Instalar la Librería `requests`
+
+Primero, instala la librería `requests` si no la tienes instalada:
+
+```bash
+pip install requests
+```
+#### 2.Crear una Vista para Obtener Datos del Clima
+En tu archivo views.py, crea una vista que haga una solicitud a la API de clima y procese la respuesta.
+
+import requests
+from django.shortcuts import render
+
+def obtener_clima(request):
+    api_key = 'TU_API_KEY'
+    ciudad = 'Madrid'
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={api_key}&units=metric'
+
+    response = requests.get(url)
+    data = response.json()
+
+    if response.status_code == 200:
+        clima = {
+            'ciudad': data['name'],
+            'temperatura': data['main']['temp'],
+            'descripcion': data['weather'][0]['description'],
+            'icono': data['weather'][0]['icon'],
+        }
+    else:
+        clima = None
+
+    return render(request, 'clima.html', {'clima': clima})
+
+#### 3. Configurar la URL para la Vista
+En tu archivo urls.py, añade una ruta para la nueva vista.
+```
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('clima/', views.obtener_clima, name='obtener_clima'),
+    # otras rutas...
+]
+ ```
+#### 4. Crear la Plantilla HTML
+Crea una plantilla clima.html en la carpeta templates para mostrar los datos del clima.   
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clima</title>
+</head>
+<body>
+    <h1>Clima en {{ clima.ciudad }}</h1>
+    {% if clima %}
+        <p>Temperatura: {{ clima.temperatura }}°C</p>
+        <p>Descripción: {{ clima.descripcion }}</p>
+        <img src="http://openweathermap.org/img/w/{{ clima.icono }}.png" alt="Icono del clima">
+    {% else %}
+        <p>No se pudo obtener el clima.</p>
+    {% endif %}
+</body>
+</html>
+### 5. Probar la Integración
+Inicia tu servidor de desarrollo y navega a http://localhost:8000/clima/ para ver los datos del clima.
+Estos pasos te permitirán integrar una API externa de clima en tu aplicación Django. Puedes adaptar este ejemplo para otras APIs según tus necesidades.
