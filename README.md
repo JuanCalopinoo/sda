@@ -52,9 +52,6 @@ El diagrama muestra las clases principales, sus atributos y métodos, así como 
 
 ### Formularios
 
-Los formularios son esenciales para la interacción del usuario con el sistema. En Django, se pueden crear formularios utilizando `forms.py`. Aquí hay un ejemplo de cómo definir formularios para las operaciones CRUD:
-
-```python
 # forms.py
 from django import forms
 from .models import Cliente, Pedido, ItemPedido
