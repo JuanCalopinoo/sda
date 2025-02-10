@@ -322,7 +322,7 @@ def ordenar_pedido(request):
     else:
         form = OrdenarPedidoForm()
     return render(request, 'metodos/user/ordenar_pedido.html', {'form': form, 'cliente': cliente})
-
+```
 ### 5. Configurar las URLs
 
 Configura las URLs para acceder a las vistas CRUD en `urls.py`.
@@ -338,6 +338,7 @@ urlpatterns = [
     path('item_pedido/modificar/<int:id>/', views.modificar_item_pedido, name='modificar_item_pedido'),
     path('item_pedido/eliminar/<int:id>/', views.eliminar_item_pedido, name='eliminar_item_pedido'),
 ]
+```
 ### 6. Crear las Plantillas HTML
 
 Crea las plantillas HTML para las vistas CRUD en la carpeta `templates`.
@@ -349,3 +350,4 @@ Crea las plantillas HTML para las vistas CRUD en la carpeta `templates`.
     {{ form.as_p }}
     <button type="submit">Guardar</button>
 </form>
+```
