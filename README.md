@@ -1,210 +1,114 @@
-# Sistema de Gestión de Pedidos de Restaurante
-
-Este proyecto tiene como objetivo implementar el módulo de Pedidos dentro de un sistema de gestión para un restaurante. El sistema está basado en un diagrama UML diseñado en la Unidad 1, que incluye los conceptos fundamentales de la programación orientada a objetos (POO), tales como la abstracción, encapsulación, herencia y polimorfismo.
-
-## Estructura del Proyecto
-
-El sistema está compuesto por 6 módulos principales, cada uno enfocado en diferentes aspectos del restaurante. Estos módulos son:
-
-1. **Gestor de Clientes**: Maneja la información y las operaciones relacionadas con los clientes.
-2. **Gestor de Mesas**: Administra la disponibilidad y asignación de mesas.
-3. **Menú y Platos**: Permite la gestión de los platos ofrecidos por el restaurante.
-4. **Personal del Restaurante**: Incluye la gestión del personal de cocina y meseros.
-5. **Historial de Operaciones**: Almacena un registro de las operaciones realizadas.
-6. **Módulo de Pedidos**: Responsable de gestionar los pedidos realizados por los clientes.
-
-### Módulo de Pedidos
-
-El módulo de Pedidos tiene las siguientes responsabilidades principales:
-
-- **Gestión de Pedidos**: Registrar los pedidos realizados por los clientes, especificando los elementos solicitados, cantidades y observaciones.
-- **Cálculo de Factura**: Calcular el total de los pedidos realizados.
-- **Seguimiento de Estado**: Actualizar y visualizar el estado de los pedidos (e.g., EN_PREPARACION, SERVIDO, PAGADO).
-
-### Implementación de POO
-
-Los conceptos de abstracción y encapsulación se implementan a través de las clases principales que representan las entidades del sistema, tales como:
-
-- **Cliente**: Representa a los clientes del restaurante.
-- **Pedido**: Contiene información sobre los pedidos realizados.
-- **ItemPedido**: Representa cada elemento del pedido.
-- **PersonalCocina** y **Mesero**: Modelan al personal del restaurante.
-
-El polimorfismo y la herencia también se emplean para garantizar que las interacciones entre clases sean flexibles y escalables.
-
-## Diagrama UML
-
-El siguiente diagrama UML describe la estructura del sistema. Este fue actualizado durante el desarrollo para reflejar los cambios realizados:
-
-![Diagrama UML](https://github.com/user-attachments/assets/ae33e66d-7f59-4cef-b792-bfeb138b42ed)
-
-El diagrama muestra las clases principales, sus atributos y métodos, así como las relaciones entre ellas, como agregaciones, composiciones y asociaciones.
-
-## Uso del Sistema
-
-1. **Registro de Clientes**: Los clientes pueden ser registrados en el sistema mediante sus datos personales.
-2. **Creación de Pedidos**: Los pedidos pueden ser realizados indicando los platos y cantidades.
-3. **Asignación de Mesas**: Los clientes pueden ser asignados a mesas disponibles.
-4. **Seguimiento de Pedidos**: El personal puede actualizar y consultar el estado de los pedidos.
-5. **Cálculo de Facturas**: El sistema calcula automáticamente el total de cada pedido.
-
-## Diseño adecuado de la GUI
-
 ```markdown
-### Diseño adecuado de la GUI
+# Proyecto de Gestión de Restaurante
 
-#### Formularios
+Este proyecto tiene como objetivo implementar un sistema de gestión para un restaurante, incluyendo una interfaz gráfica de usuario (GUI), integración con una base de datos, uso de APIs o librerías estándar, y pruebas de integración y funcionalidad.
 
-Los formularios son esenciales para la interacción del usuario con el sistema. En Django, se pueden crear formularios utilizando `forms.py`. Aquí hay un ejemplo de cómo definir formularios para las operaciones CRUD:
+## Implementación de la Interfaz Gráfica de Usuario (GUI)
 
-```python
-# forms.py
-from django import forms
-from .models import Cliente, Pedido, ItemPedido
+### Descripción
 
-class ClienteForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = ['cedula', 'nombre', 'telefono', 'cantidad_persona']
+Los estudiantes deben diseñar e implementar una interfaz gráfica de usuario (GUI) que permita interactuar con las funcionalidades desarrolladas en las unidades anteriores. La interfaz debe ser intuitiva y seguir principios de buen diseño de UX/UI.
 
-class PedidoForm(forms.ModelForm):
-    class Meta:
-        model = Pedido
-        fields = ['cliente', 'mesa', 'estado']
+### Criterios de Evaluación
 
-class ItemPedidoForm(forms.ModelForm):
-    class Meta:
-        model = ItemPedido
-        fields = ['cliente', 'plato', 'cantidad', 'observacion']
-```
+- **Diseño adecuado de la GUI**: incluyendo formularios, botones, menús, etc.
+- **Conectividad de la GUI con el backend**: clases implementadas en la Unidad 2.
+- **Funcionalidad**: la interfaz debe permitir realizar las operaciones CRUD en la base de datos.
+- **Calidad estética y usabilidad de la interfaz**.
 
-#### Botones y Menús
+### Entrega
 
-Los botones y menús se definen en las plantillas HTML. Aquí hay un ejemplo de cómo crear un formulario con botones en una plantilla HTML:
+El código de la GUI debe ser subido a GitHub, junto con un archivo README que explique cómo se diseñó e implementó la interfaz. Se debe incluir una captura de pantalla de la interfaz.
 
-```html
-<!-- templates/crear_cliente.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Crear Cliente</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Crear Cliente</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
-    </div>
-</body>
-</html>
-```
+## Integración con una Base de Datos y Operaciones CRUD
 
-### Conectividad de la GUI con el backend
+### Descripción
 
-#### Vistas
+Los grupos deben conectar su aplicación a una base de datos y permitir que la interfaz gráfica realice las operaciones básicas de CRUD (Crear, Leer, Actualizar, Eliminar) sobre los datos.
 
-Las vistas en `views.py` manejan las solicitudes HTTP y conectan los formularios con los modelos de la base de datos. Aquí hay un ejemplo de vistas para las operaciones CRUD:
+### Criterios de Evaluación
 
-```python
-# views.py
-from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ClienteForm, PedidoForm, ItemPedidoForm
-from .models import Cliente, Pedido, ItemPedido
+- **Correcta configuración de la base de datos**: puede ser SQL, MySQL, SQLite, etc.
+- **Funcionalidad completa de las operaciones CRUD**: desde la interfaz gráfica.
+- **Seguridad básica en las transacciones con la base de datos**.
 
-def crear_cliente(request):
-    if request.method == 'POST':
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_clientes')
-    else:
-        form = ClienteForm()
-    return render(request, 'crear_cliente.html', {'form': form})
+### Entrega
 
-def lista_clientes(request):
-    clientes = Cliente.objects.all()
-    return render(request, 'lista_clientes.html', {'clientes': clientes})
+El código de la base de datos y la interfaz conectada deben estar en GitHub, con un archivo README explicando cómo se configuró la base de datos y las operaciones CRUD implementadas.
 
-def modificar_cliente(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    if request.method == 'POST':
-        form = ClienteForm(request.POST, instance=cliente)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_clientes')
-    else:
-        form = ClienteForm(instance=cliente)
-    return render(request, 'modificar_cliente.html', {'form': form})
+## Uso de APIs o Librerías Estándar
 
-def eliminar_cliente(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    if request.method == 'POST':
-        cliente.delete()
-        return redirect('lista_clientes')
-    return render(request, 'eliminar_cliente.html', {'cliente': cliente})
-```
+### Descripción
 
-### Funcionalidad: Operaciones CRUD
+Los grupos deben integrar una API externa (módulos de los otros grupos) o una librería estándar que añada funcionalidades a su aplicación (por ejemplo, una API de clima, geolocalización, etc.).
 
-La interfaz debe permitir realizar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la base de datos. Los ejemplos anteriores muestran cómo crear, listar, modificar y eliminar clientes.
+### Criterios de Evaluación
 
-### Calidad estética y usabilidad de la interfaz
+- **Correcta integración de una API o librería estándar**: para mejorar la funcionalidad de la aplicación.
+- **Claridad y funcionalidad de la documentación y uso de la API o librería**.
+- **Eficiencia de la API o librería en la aplicación**.
 
-Para mejorar la apariencia y usabilidad de la interfaz, se pueden utilizar CSS y frameworks como Bootstrap. Aquí hay un ejemplo de cómo incluir Bootstrap en una plantilla HTML:
+### Entrega
 
-```html
-<!-- templates/base.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% block title %}Mi Aplicación{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
-</body>
-</html>
-```
+El código con la integración de la API o librería debe subirse a GitHub, junto con un archivo README que explique la funcionalidad agregada y cómo se implementó.
 
-Luego, extiende esta plantilla en otras plantillas para mantener un diseño consistente:
+## Pruebas de Integración y Funcionalidad
 
-```html
-<!-- templates/crear_cliente.html -->
-{% extends 'base.html' %}
+### Descripción
 
-{% block title %}Crear Cliente{% endblock %}
+Los estudiantes deben realizar pruebas de integración para asegurarse de que todos los componentes (GUI, base de datos, lógica de negocio, API) funcionan de manera cohesiva.
 
-{% block content %}
-<h2>Crear Cliente</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-</form>
-{% endblock %}
-```
-```markdown
-# Integración con una Base de Datos y Operaciones CRUD
+### Criterios de Evaluación
 
-## Configuración de la Base de Datos
+- **Realización de pruebas funcionales**: que demuestren que todos los módulos funcionan correctamente juntos.
+- **Corrección de errores detectados durante las pruebas**.
+- **Presentación de un informe de pruebas**: que incluya las pruebas realizadas, los resultados obtenidos y las correcciones aplicadas.
 
-Para este proyecto, utilizaremos SQLite como base de datos. A continuación, se detalla cómo configurar la base de datos en un proyecto Django.
+### Entrega
 
-1. **Instalación de Django**:
+El informe de pruebas debe ser entregado en el EVA, junto con el código en GitHub que refleje las correcciones y mejoras realizadas.
+
+## Reflexión Escrita Final
+
+### Descripción
+
+Los estudiantes deben entregar una reflexión escrita que explique el proceso de implementación de la interfaz gráfica, la integración con la base de datos, el uso de la API o librería estándar, y las pruebas de integración.
+
+### Criterios de Evaluación
+
+- **Explicación clara de cómo se integraron los distintos componentes de la aplicación**: interfaz, base de datos, API.
+- **Justificación de las decisiones de diseño y cambios implementados**.
+- **Reflexión sobre los retos enfrentados y cómo se resolvieron**.
+
+### Entrega
+
+La reflexión se entregará en el EVA junto con el enlace al repositorio en GitHub.
+
+## Criterios Generales de Evaluación
+
+- **Coherencia y cohesión del sistema completo**: Todos los módulos (interfaz, base de datos, API) deben funcionar de manera integrada y sin errores.
+- **Usabilidad de la interfaz gráfica**: La GUI debe ser intuitiva y permitir la interacción con el backend y la base de datos de manera eficiente.
+- **Calidad del código y la documentación**: El código debe estar bien estructurado, comentado y documentado en GitHub.
+- **Cumplimiento de plazos**: Se evaluará la puntualidad en la entrega de cada parte del proyecto.
+
+## Capturas de Pantalla
+
+![Captura de Pantalla de la Interfaz](ruta/a/la/captura.png)
+
+## Instalación y Configuración
+
+1. **Clonar el repositorio**:
    ```bash
-   pip install django
+   git clone https://github.com/usuario/proyecto.git
    ```
 
-2. **Configuración de la Base de Datos en `settings.py`**:
+2. **Instalar dependencias**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configurar la base de datos en `settings.py`**:
    ```python
-   # settings.py
    DATABASES = {
        'default': {
            'ENGINE': 'django.db.backends.sqlite3',
@@ -213,155 +117,16 @@ Para este proyecto, utilizaremos SQLite como base de datos. A continuación, se 
    }
    ```
 
-3. **Migraciones de la Base de Datos**:
+4. **Realizar migraciones de la base de datos**:
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
 
-## Diseño adecuado de la GUI
-
-### Formularios
-
-Los formularios son esenciales para la interacción del usuario con el sistema. En Django, se pueden crear formularios utilizando `forms.py`. Aquí hay un ejemplo de cómo definir formularios para las operaciones CRUD:
-
-```python
-# forms.py
-from django import forms
-from .models import Cliente, Pedido, ItemPedido
-
-class ClienteForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = ['cedula', 'nombre', 'telefono', 'cantidad_persona']
-
-class PedidoForm(forms.ModelForm):
-    class Meta:
-        model = Pedido
-        fields = ['cliente', 'mesa', 'estado']
-
-class ItemPedidoForm(forms.ModelForm):
-    class Meta:
-        model = ItemPedido
-        fields = ['cliente', 'plato', 'cantidad', 'observacion']
-```
-
-### Botones y Menús
-
-Los botones y menús se definen en las plantillas HTML. Aquí hay un ejemplo de cómo crear un formulario con botones en una plantilla HTML:
-
-```html
-<!-- templates/crear_cliente.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Crear Cliente</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Crear Cliente</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
-    </div>
-</body>
-</html>
-```
-
-## Conectividad de la GUI con el backend
-
-### Vistas
-
-Las vistas en `views.py` manejan las solicitudes HTTP y conectan los formularios con los modelos de la base de datos. Aquí hay un ejemplo de vistas para las operaciones CRUD:
-
-```python
-# views.py
-from django.shortcuts import render, get_object_or_404, redirect
-from .forms import ClienteForm, PedidoForm, ItemPedidoForm
-from .models import Cliente, Pedido, ItemPedido
-
-def crear_cliente(request):
-    if request.method == 'POST':
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_clientes')
-    else:
-        form = ClienteForm()
-    return render(request, 'crear_cliente.html', {'form': form})
-
-def lista_clientes(request):
-    clientes = Cliente.objects.all()
-    return render(request, 'lista_clientes.html', {'clientes': clientes})
-
-def modificar_cliente(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    if request.method == 'POST':
-        form = ClienteForm(request.POST, instance=cliente)
-        if form.is_valid():
-            form.save()
-            return redirect('lista_clientes')
-    else:
-        form = ClienteForm(instance=cliente)
-    return render(request, 'modificar_cliente.html', {'form': form})
-
-def eliminar_cliente(request, id):
-    cliente = get_object_or_404(Cliente, id=id)
-    if request.method == 'POST':
-        cliente.delete()
-        return redirect('lista_clientes')
-    return render(request, 'eliminar_cliente.html', {'cliente': cliente})
-```
-
-## Funcionalidad: Operaciones CRUD
-
-La interfaz debe permitir realizar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en la base de datos. Los ejemplos anteriores muestran cómo crear, listar, modificar y eliminar clientes.
-
-## Calidad estética y usabilidad de la interfaz
-
-Para mejorar la apariencia y usabilidad de la interfaz, se pueden utilizar CSS y frameworks como Bootstrap. Aquí hay un ejemplo de cómo incluir Bootstrap en una plantilla HTML:
-
-```html
-<!-- templates/base.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% block title %}Mi Aplicación{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
-</body>
-</html>
-```
-
-Luego, extiende esta plantilla en otras plantillas para mantener un diseño consistente:
-
-```html
-<!-- templates/crear_cliente.html -->
-{% extends 'base.html' %}
-
-{% block title %}Crear Cliente{% endblock %}
-
-{% block content %}
-<h2>Crear Cliente</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-</form>
-{% endblock %}
-
-
-## Seguridad Básica en las Transacciones
-
-Para asegurar las transacciones básicas, se recomienda utilizar las características de seguridad integradas en Django, como la protección CSRF (Cross-Site Request Forgery) y la validación de formularios.
+5. **Ejecutar el servidor**:
+   ```bash
+   python manage.py runserver
+   ```
 
 ## Contribución
 
