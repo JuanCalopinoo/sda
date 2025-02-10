@@ -190,4 +190,45 @@ Luego, extiende esta plantilla en otras plantillas para mantener un diseño cons
 </form>
 {% endblock %}
 ```
+# Conexión de Base de Datos y Operaciones CRUD en Django
+
+Este proyecto permite conectar una base de datos y realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) a través de una interfaz gráfica en Django.
+
+## Pasos para Configurar y Ejecutar
+
+### 1. Configurar la Base de Datos
+
+Asegúrate de tener configurada tu base de datos en el archivo `settings.py` de tu proyecto Django.
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # o el motor de base de datos que estés usando
+        'NAME': 'nombre_de_tu_base_de_datos',
+        'USER': 'tu_usuario',
+        'PASSWORD': 'tu_contraseña',
+        'HOST': 'localhost',  # o la dirección de tu servidor de base de datos
+        'PORT': '5432',  # o el puerto de tu servidor de base de datos
+    }
+}
 ```
+### 2. Realizar las Migraciones
+Ejecuta las migraciones para crear las tablas en la base de datos.
+python manage.py makemigrations
+python manage.py migrate
+### 3. Crear Formularios para las Operaciones CRUD
+Define formularios en forms.py para las entidades sobre las que deseas realizar operaciones CRUD
+```
+from django import forms
+
+from .models import PersonalCocina, ItemPedido
+```
+class PersonalCocinaForm(forms.ModelForm):
+    class Meta:
+        model = PersonalCocina
+        fields = '__all__'
+
+class ItemPedidoForm(forms.ModelForm):
+    class Meta:
+        model = ItemPedido
+        fields = '__all__'
