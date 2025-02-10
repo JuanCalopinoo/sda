@@ -190,4 +190,38 @@ Luego, extiende esta plantilla en otras plantillas para mantener un diseño cons
 </form>
 {% endblock %}
 ```
-```
+# Uso de APIs e implementacion
+## Aplicación de Mapa y Clima
+
+Esta aplicación integra dos APIs externas para enriquecer la experiencia del usuario:
+- **Google Maps API:** Muestra un mapa interactivo y permite la geolocalización.
+- **Meteoblue API:** Proporciona un widget con información meteorológica actual y pronósticos.
+
+## Funcionalidades
+
+- **Mapa Interactivo:**  
+  Se muestra un mapa centrado en una ubicación específica, con un marcador indicando la posición. Se utiliza la API de Google Maps para implementar esta funcionalidad.
+
+- **Información Meteorológica:**  
+  Se incorpora un widget de Meteoblue a través de un `<iframe>`, el cual muestra datos actualizados del clima.
+
+## Implementación
+
+### Google Maps API
+![image](https://github.com/user-attachments/assets/3f947ede-44e4-419c-923c-ac3ece4772dc)
+
+1. Se incluye el script de la API en el HTML, asegurando que se ejecute la función `initMap` al cargarse.
+2. La función `initMap` crea el mapa y agrega un marcador en la ubicación deseada.
+3. Es necesario reemplazar `{{ google_maps_api_key }}` por una clave válida obtenida desde la [Consola de Desarrolladores de Google Cloud](https://console.cloud.google.com/).
+
+### Meteoblue API
+![image](https://github.com/user-attachments/assets/8b2f8122-c3a0-4bcf-a65e-37f511243371)
+
+1. Se utiliza un `<iframe>` para integrar el widget de Meteoblue.
+2. La URL del widget se define en la variable `{{ meteoblue_url }}`, la cual debe configurarse correctamente para mostrar los datos meteorológicos.
+
+## Requisitos
+
+- Navegador web moderno con soporte para JavaScript.
+- Conexión a Internet para cargar las APIs externas.
+
