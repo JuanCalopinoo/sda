@@ -347,7 +347,8 @@ urlpatterns = [
 
 Crea las plantillas HTML para las vistas CRUD en la carpeta `templates`.
 
-```html
+```
+html
 <!-- modificar_personal_cocina.html -->
 <form method="post">
     {% csrf_token %}
@@ -368,7 +369,7 @@ pip install requests
 ```
 #### 2.Crear una Vista para Obtener Datos del Clima
 En tu archivo views.py, crea una vista que haga una solicitud a la API de clima y procese la respuesta.
-
+```
 import requests
 from django.shortcuts import render
 
@@ -391,7 +392,7 @@ def obtener_clima(request):
         clima = None
 
     return render(request, 'clima.html', {'clima': clima})
-
+```
 #### 3. Configurar la URL para la Vista
 En tu archivo urls.py, añade una ruta para la nueva vista.
 ```
@@ -405,6 +406,7 @@ urlpatterns = [
  ```
 #### 4. Crear la Plantilla HTML
 Crea una plantilla clima.html en la carpeta templates para mostrar los datos del clima.   
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -421,6 +423,7 @@ Crea una plantilla clima.html en la carpeta templates para mostrar los datos del
     {% endif %}
 </body>
 </html>
+```
 ### 5. Probar la Integración
 Inicia tu servidor de desarrollo y navega a http://localhost:8000/clima/ para ver los datos del clima.
 Estos pasos te permitirán integrar una API externa de clima en tu aplicación Django. Puedes adaptar este ejemplo para otras APIs según tus necesidades.
