@@ -425,5 +425,8 @@ Crea una plantilla clima.html en la carpeta templates para mostrar los datos del
 </html>
 ```
 ### 5. Probar la Integración
-Inicia tu servidor de desarrollo y navega a http://localhost:8000/clima/ para ver los datos del clima.
+Inicia tu servidor de desarrollo y navega a
+```
+http://localhost:8000/clima/ para ver los datos del clima.
+```
 Estos pasos te permitirán integrar una API externa de clima en tu aplicación Django. Puedes adaptar este ejemplo para otras APIs según tus necesidades.
