@@ -214,8 +214,12 @@ DATABASES = {
 ```
 ### 2. Realizar las Migraciones
 Ejecuta las migraciones para crear las tablas en la base de datos.
+```
 python manage.py makemigrations
+
 python manage.py migrate
+
+```
 ### 3. Crear Formularios para las Operaciones CRUD
 Define formularios en forms.py para las entidades sobre las que deseas realizar operaciones CRUD
 ```
