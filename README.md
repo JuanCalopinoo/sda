@@ -21,7 +21,8 @@ Para la creación de la interfaz gráfica se optó por un diseño web moderno y 
 ![Login](https://github.com/user-attachments/assets/1c1b8994-aec9-4d13-9e25-f1f539aeaeea)
 >Autenticacion de usuario
 
-
+![image](https://github.com/user-attachments/assets/4418da47-1c8b-45ec-aba0-70d6672f0418)
+>Creacion de una cuenta
 
 
 Esta aproximación permitió desarrollar una interfaz atractiva y funcional, que se conecta de manera efectiva con los servicios en el backend.
