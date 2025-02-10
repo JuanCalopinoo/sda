@@ -232,3 +232,120 @@ class ItemPedidoForm(forms.ModelForm):
     class Meta:
         model = ItemPedido
         fields = '__all__'
+
+### 4. Definir las Vistas para las Operaciones CRUD
+
+Define las vistas en `views.py` para crear, modificar y eliminar `PersonalCocina` e `ItemPedido`.
+
+```python
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import PersonalCocina, ItemPedido, UserProfile, Cliente
+from .forms import PersonalCocinaForm, ItemPedidoForm, ItemPedidoFormMod, OrdenarPedidoForm
+
+def modificar_personal_cocina(request, id):
+    personal_cocina = get_object_or_404(PersonalCocina, id=id)
+    if request.method == 'POST':
+        form = PersonalCocinaForm(request.POST, instance=personal_cocina)
+        if form.is_valid():
+            form.save()
+            return redirect('personal_cocina')
+    else:
+        form = PersonalCocinaForm(instance=personal_cocina)
+    return render(request, 'objetos_personal_cocina/modificar_personal_cocina.html', {'form': form})
+
+def eliminar_personal_cocina(request, id):
+    personal_cocina = get_object_or_404(PersonalCocina, id=id)
+    if request.method == 'POST':
+        personal_cocina.delete()
+        return redirect('personal_cocina')
+    return render(request, 'objetos_personal_cocina/eliminar_personal_cocina.html', {'personal_cocina': personal_cocina})
+
+def crear_item_pedido(request):
+    if request.user.groups.filter(name='Clientes').exists():
+        user_profile = UserProfile.objects.get(user=request.user)
+        if request.method == 'POST':
+            form = ItemPedidoForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('item_pedido_list')
+        else:
+            form = ItemPedidoForm()
+        data = {
+            'form': form,
+            'user': request.user,
+            'cliente': Cliente.objects.get(cedula=user_profile.cedula),
+        }
+        return render(request, 'user/objetos_item_pedido/crear_item_pedido.html', data)
+    elif request.user.groups.filter(name='Empleados').exists():
+        if request.method == 'POST':
+            form = ItemPedidoForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('pedidos')
+        else:
+            form = ItemPedidoForm()
+        data = {
+            'form': form,
+        }
+        return render(request, 'objetos_pedidos/crear_item_pedido.html', data)
+
+def modificar_item_pedido(request, id):
+    item_pedido = get_object_or_404(ItemPedido, id=id)
+    if request.method == 'POST':
+        form = ItemPedidoFormMod(request.POST, instance=item_pedido)
+        if form.is_valid():
+            form.save()
+            return redirect('item_pedido_list')
+    else:
+        form = ItemPedidoFormMod(instance=item_pedido)
+
+    return render(request, 'user/objetos_item_pedido/modificar_item_pedido.html', {'form': form})
+
+def eliminar_item_pedido(request, id):
+    item_pedido = get_object_or_404(ItemPedido, id=id)
+    if request.method == 'POST':
+        item_pedido.delete()
+        return redirect('item_pedido_list')
+    return render(request, 'user/objetos_item_pedido/eliminar_item_pedido.html', {'item_pedido': item_pedido})
+
+def ordenar_pedido(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    cliente = Cliente.objects.get(cedula=user_profile.cedula)
+    if request.method == 'POST':
+        form = OrdenarPedidoForm(request.POST)
+        if form.is_valid():
+            es_para_llevar = form.cleaned_data['es_para_llevar']
+            mesa_ocupada = form.cleaned_data['mesa_ocupada']
+            cliente.ordenar_pedido(es_para_llevar, mesa_ocupada)
+            return redirect('pedidos')
+    else:
+        form = OrdenarPedidoForm()
+    return render(request, 'metodos/user/ordenar_pedido.html', {'form': form, 'cliente': cliente})
+
+### 5. Configurar las URLs
+
+Configura las URLs para acceder a las vistas CRUD en `urls.py`.
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('personal_cocina/modificar/<int:id>/', views.modificar_personal_cocina, name='modificar_personal_cocina'),
+    path('personal_cocina/eliminar/<int:id>/', views.eliminar_personal_cocina, name='eliminar_personal_cocina'),
+    path('item_pedido/crear/', views.crear_item_pedido, name='crear_item_pedido'),
+    path('item_pedido/modificar/<int:id>/', views.modificar_item_pedido, name='modificar_item_pedido'),
+    path('item_pedido/eliminar/<int:id>/', views.eliminar_item_pedido, name='eliminar_item_pedido'),
+]
+### 6. Crear las Plantillas HTML
+
+Crea las plantillas HTML para las vistas CRUD en la carpeta `templates`.
+
+```html
+<!-- modificar_personal_cocina.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
